@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
-
+const nextConfig = {
+    images: {
+      domains: ['avatars.githubusercontent.com','example.com'], // Add external image domains here
+    },
+  };
 export default nextConfig;

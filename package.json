@@ -9,9 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "fs": "^0.0.1-security",
+    "mongoose": "^8.7.1",
+    "next": "14.2.14",
+    "next-auth": "^3.29.10",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.14"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "postcss": "^8",
