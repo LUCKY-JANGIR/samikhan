@@ -7,4 +7,4 @@ const userSchema = new mongoose.Schema({
   image: { type: String, default: '/defaultImg.webp' }, // Default image
   location: { type: String, required: true },
 })
-// export default mongoose.models.User || mongoose.model("User",userSchema)
+export default mongoose.models.User || mongoose.model("User",userSchema)
