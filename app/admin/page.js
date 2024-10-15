@@ -1,7 +1,7 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useSession } from '../../../models/node_modules/next-auth/src/react';
+import { useRouter } from '@/models/node_modules/next/navigation';
 import { useEffect } from 'react';
 
 export default function AdminPage() {

@@ -1,8 +1,8 @@
 'use client'
-import Link from 'next/link'
+import Link from '@/models/node_modules/next/link'
 import React from 'react'
-import { signIn, signOut, useSession } from 'next-auth/react';
-import Image from 'next/image';
+import { signIn, signOut, useSession } from '../../../models/node_modules/next-auth/src/react';
+import Image from '@/models/node_modules/next/image';
 export default function Header() {
   const { data: session } = useSession();
   return (

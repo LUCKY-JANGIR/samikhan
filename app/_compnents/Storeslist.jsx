@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link';
+import Link from '@/models/node_modules/next/link';
 import { useStores } from '../contexts/storeslistcontext';
 
 export default function Storeslist() {

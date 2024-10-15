@@ -1,8 +1,8 @@
 // app/profile/page.js (or pages/profile.js if using pages directory)
-import { getServerSession } from "next-auth";
-import Image from 'next/image';
+import { getServerSession } from "../../../models/node_modules/next-auth/src";
+import Image from '@/models/node_modules/next/image';
 import { authOptions } from "../api/auth/[...nextauth]/route";
-import Link from "next/link";
+import Link from "@/models/node_modules/next/link";
 
 export default async function page() {
     const session = await getServerSession(authOptions);

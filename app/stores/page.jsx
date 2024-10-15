@@ -1,7 +1,7 @@
 // app/stores/page.js
 "use client"
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "@/models/node_modules/next/link";
 import Storecards from "../_compnents/Storescard";
 
 export default function StoresPage() {

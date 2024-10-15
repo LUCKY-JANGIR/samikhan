@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from '@/models/node_modules/next/server';
 
 export function middleware(req) {
   const { pathname } = req.nextUrl;

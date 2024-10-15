@@ -1,9 +1,9 @@
 'use client'
-import localFont from "next/font/local";
+import localFont from "@/models/node_modules/next/font/local";
 import "./globals.css";
 import Header from "./_compnents/Header";
-import { SessionProvider } from 'next-auth/react';
-import { getServerSession } from 'next-auth/next';
+import { SessionProvider } from '../../models/node_modules/next-auth/src/react';
+import { getServerSession } from '../../models/node_modules/next-auth/src/next';
 import { authOptions } from './api/auth/[...nextauth]/route'
 import { StoresProvider } from "./contexts/storeslistcontext";
 

@@ -1,6 +1,6 @@
 'use client'
-import { signIn, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { signIn, useSession } from '../../../../models/node_modules/next-auth/src/react';
+import { useRouter } from '@/models/node_modules/next/navigation';
 import { useEffect,useState } from 'react';
 export default function SignIn ({ providers })  { 
   const [username, setUsername] = useState('');

@@ -1,8 +1,8 @@
-import NextAuth from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google"; // Import Google Provider
-import CredentialsProvider from "next-auth/providers/credentials";
-import User from '@/models/user'; // Adjust the path as necessary
+import NextAuth from "../../../../../models/node_modules/next-auth/src";
+import GitHubProvider from "../../../../../models/node_modules/next-auth/src/providers/github";
+import GoogleProvider from "../../../../../models/node_modules/next-auth/src/providers/google"; // Import Google Provider
+import CredentialsProvider from "../../../../../models/node_modules/next-auth/src/providers/credentials";
+import User from '@/models/user';
 import connectToDatabase from '@/lib/dbconnect'; // Adjust the path as necessary
 // import bcrypt from 'bcrypt'; // For password hashing
 
@@ -16,30 +16,30 @@ export const authOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-    CredentialsProvider({
-      name: 'credentials',
-      credentials: {
-        username: { label: 'Username', type: 'text' },
-        password: { label: 'Password', type: 'password' },
-      },
-      async authorize(credentials) {
-        await connectToDatabase();
-        const user = await User.findOne({ username: credentials.username });
+    // CredentialsProvider({
+    //   name: 'credentials',
+    //   credentials: {
+    //     username: { label: 'Username', type: 'text' },
+    //     password: { label: 'Password', type: 'password' },
+    //   },
+    //   async authorize(credentials) {
+    //     await connectToDatabase();
+    //     const user = await User.findOne({ username: credentials.username });
 
-        if (user && user.password === credentials.password) {
-          return {
-            id: user._id,
-            username: user.username,
-            email: user.email,
-            role: user.role,
-            name: user.name,
-            image: user.image,
-          };
-        }
+    //     if (user && user.password === credentials.password) {
+    //       return {
+    //         id: user._id,
+    //         username: user.username,
+    //         email: user.email,
+    //         role: user.role,
+    //         name: user.name,
+    //         image: user.image,
+    //       };
+    //     }
 
-        throw new Error("Invalid username or password");
-      },
-    }),
+    //     throw new Error("Invalid username or password");
+    //   },
+    // }),
   ],
   pages: {
     signIn: '/auth/signin',
