@@ -1,5 +1,5 @@
-import Image from '@/models/node_modules/next/image';
-import Link from '@/models/node_modules/next/link';
+import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 export default function Cards(props) {

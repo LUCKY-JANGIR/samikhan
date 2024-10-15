@@ -1,6 +1,6 @@
 "use client"
 import Storeslist from '../_compnents/Storeslist';
-import { usePathname } from '@/models/node_modules/next/navigation'
+import { usePathname } from 'next/navigation'
 export default function StoresLayout({ children }) {
   let pathname = usePathname()
 

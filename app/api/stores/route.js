@@ -1,6 +1,6 @@
 // app/api/stores/route.js
 import dbConnect from "@/lib/dbconnect";
-import { NextResponse } from "@/models/node_modules/next/server";
+import { NextResponse } from "next/server";
 import Store from "@/models/store"; // Import the Store model
 export async function GET() {
   try {

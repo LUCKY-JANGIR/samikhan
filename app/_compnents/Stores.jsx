@@ -1,5 +1,5 @@
 "use client"
-import Link from '@/models/node_modules/next/link'
+import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { useStores } from '../contexts/storeslistcontext'
 

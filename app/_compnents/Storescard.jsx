@@ -1,5 +1,5 @@
-import Image from '@/models/node_modules/next/image';
-import Link from '@/models/node_modules/next/link'; // To link to the dynamic store page
+import Image from 'next/image';
+import Link from 'next/link'; // To link to the dynamic store page
 
 export default function Storecards(props) {
   return (

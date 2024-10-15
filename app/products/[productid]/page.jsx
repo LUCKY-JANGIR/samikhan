@@ -2,7 +2,7 @@
 
 
 import Cards from "@/app/_compnents/Cards";
-import { usePathname } from "@/models/node_modules/next/navigation";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react"; 
 export default function ProductsPage() {
   const [product, setProduct] = useState([]);
