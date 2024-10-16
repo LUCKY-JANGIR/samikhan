@@ -3,8 +3,11 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-const RegisterPage = () => {
-  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+const LoginPage = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const router = useRouter();
@@ -14,22 +17,20 @@ const RegisterPage = () => {
     setError(null);
     setSuccess(null);
 
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-
     try {
-      const response = await axios.post('/api/auth/register', formData);
-      
-      if (response.status === 201) {
-        setSuccess(response.data.message);
-        router.push('/login');  // Redirect to login page on success
+      const response = await axios.post('/api/auth/login', {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (response.status === 200) {
+        setSuccess('Login successful');
+        router.push('/');  // Redirect to dashboard or homepage
       }
     } catch (err) {
       if (err.response) {
         // Server responded with a status other than 2xx
-        setError(err.response.data.message || 'An error occurred');
+        setError(err.response.data.message || 'Invalid email or password');
       } else {
         // Network error or other issue
         setError('An error occurred');
@@ -46,15 +47,8 @@ const RegisterPage = () => {
 
   return (
     <div>
-      <h1>Register</h1>
-      <form >
-        <input
-          type="text"
-          name="username"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleInputChange}
-        />
+      <h1>Login</h1>
+      <form onSubmit={handleSubmit}>
         <input
           type="email"
           name="email"
@@ -69,14 +63,7 @@ const RegisterPage = () => {
           value={formData.password}
           onChange={handleInputChange}
         />
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          value={formData.confirmPassword}
-          onChange={handleInputChange}
-        />
-        <button onClick={handleSubmit}>Register</button>
+        <button type="submit">Login</button>
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {success && <p style={{ color: 'green' }}>{success}</p>}
@@ -84,4 +71,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default LoginPage;

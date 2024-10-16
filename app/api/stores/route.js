@@ -8,6 +8,7 @@ export async function GET() {
     const stores = await Store.find({}); // Fetch all stores
     return NextResponse.json(stores); // Send the stores data as JSON
   } catch (error) {
+    console.log(error)
     return NextResponse.json({ error: "Failed to fetch stores" }, { status: 500 });
   }
 }

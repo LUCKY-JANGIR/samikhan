@@ -1,37 +1,46 @@
-import dbConnect from '@/lib/dbconnect';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import dbConnect from "@/lib/dbconnect";
+import user from "@/models/user";
+import bcrypt from "bcrypt"
 
-export async function POST(req) {
-  const { email, password } = await req.json();
+export async function POST(request) {
+  try {
+    const {  email, password } = await request.json();
+    console.log(email,password)
+    if (!email || !password) {
+      return new Response(JSON.stringify({ message: 'Missing required fields' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
-  const { db } = await dbConnect();
+    await dbConnect();
 
-  // Find the user by email
-  const user = await db.collection('users').findOne({ email });
-  if (!user) {
-    return new Response(JSON.stringify({ success: false, message: 'Invalid credentials' }), { status: 401 });
+    const userExists = await user.findOne({ email });
+    if (!userExists) {
+      return new Response(JSON.stringify({ message: 'Invalid emails' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    console.log("User password (hashed):", userExists.password); // Should be hashed
+    console.log("Entered password:", password);
+    const isMatch = await bcrypt.compare(password,userExists.password);  // Compare entered password with hashed password
+      if (!isMatch) {
+        return new Response(JSON.stringify({ message: 'Invalid password' }), {
+          status: 401,
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+      }
+      return new Response(JSON.stringify({ message: 'user found' }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+  } catch (error) {
+    console.error(error);
+    return new Response(JSON.stringify({ message: 'An error occurred' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
-
-  // Compare the password
-  const passwordMatches = await bcrypt.compare(password, user.password);
-  if (!passwordMatches) {
-    return new Response(JSON.stringify({ success: false, message: 'Invalid credentials' }), { status: 401 });
-  }
-
-  // Generate JWT
-  const token = jwt.sign(
-    {
-      id: user._id,
-      email: user.email,
-      role: user.role,
-    },
-    process.env.JWT_SECRET, 
-    { expiresIn: '1h' }
-  );
-
-  return new Response(JSON.stringify({
-    success: true,
-    token,
-  }), { status: 200 });
 }

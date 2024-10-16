@@ -1,44 +1,55 @@
-import dbConnect from '@/lib/dbconnect';
+// app/api/register/route.js
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import dbConnect from '@/lib/dbconnect'; // Your database connection logic
+import user from '@/models/user';
 
-export async function POST(req) {
-  const { username, email, password } = await req.json();
+export async function POST(request) {
+  try {
+    const { username, email, password } = await request.json();
 
-  const { db } = await dbConnect();
+    if (!username || !email || !password) {
+      return new Response(JSON.stringify({ message: 'Missing required fields' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
-  // Check if user already exists
-  const existingUser = await db.collection('users').findOne({ email });
-  if (existingUser) {
-    return new Response(JSON.stringify({ success: false, message: 'User already exists' }), { status: 400 });
+    await dbConnect();
+
+    const emailExists = await user.findOne({ email });
+    if (emailExists) {
+      return new Response(JSON.stringify({ message: 'email already exists' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    const userExists = await user.findOne({ email });
+    if (userExists) {
+      return new Response(JSON.stringify({ message: 'user already exists' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 23);
+
+    const newUser = new user({
+      username,
+      email,
+      password: hashedPassword,
+    });
+
+    await newUser.save();
+
+    return new Response(JSON.stringify({ message: 'User registered successfully' }), {
+      status: 201,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    console.error(error);
+    return new Response(JSON.stringify({ message: 'An error occurred' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
-
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Save the user to the database
-  const user = await db.collection('users').insertOne({
-    username,
-    email,
-    password: hashedPassword,
-    role: 'user', // Default role
-    createdAt: new Date(),
-  });
-
-  // Generate a JWT
-  const token = jwt.sign(
-    {
-      id: user.insertedId,
-      email: email,
-      role: 'user',
-    },
-    process.env.JWT_SECRET, // Add JWT_SECRET in .env.local
-    { expiresIn: '1h' } // Token expires in 1 hour
-  );
-
-  return new Response(JSON.stringify({
-    success: true,
-    message: 'User registered successfully',
-    token, // Send the JWT back
-  }), { status: 201 });
 }
