@@ -47,7 +47,7 @@ const RegisterPage = () => {
   return (
     <div>
       <h1>Register</h1>
-      <form >
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="username"
@@ -76,7 +76,7 @@ const RegisterPage = () => {
           value={formData.confirmPassword}
           onChange={handleInputChange}
         />
-        <button onClick={handleSubmit}>Register</button>
+        <button type='Submin'>Register</button>
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {success && <p style={{ color: 'green' }}>{success}</p>}

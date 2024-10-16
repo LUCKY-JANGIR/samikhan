@@ -1,8 +1,11 @@
 import dbConnect from "@/lib/dbconnect";
 import user from "@/models/user";
 import bcrypt from "bcrypt"
+import  JWT from "jsonwebtoken";
+
 
 export async function POST(request) {
+   const JWT_SECRET = process.env.JWT_SECRET
   try {
     const {  email, password } = await request.json();
     console.log(email,password)
@@ -12,9 +15,7 @@ export async function POST(request) {
         headers: { 'Content-Type': 'application/json' },
       });
     }
-
     await dbConnect();
-
     const userExists = await user.findOne({ email });
     if (!userExists) {
       return new Response(JSON.stringify({ message: 'Invalid emails' }), {
@@ -22,9 +23,8 @@ export async function POST(request) {
         headers: { 'Content-Type': 'application/json' },
       });
     }
-    console.log("User password (hashed):", userExists.password); // Should be hashed
-    console.log("Entered password:", password);
     const isMatch = await bcrypt.compare(password,userExists.password);  // Compare entered password with hashed password
+    console.log("getting errorwhile !ismatch")
       if (!isMatch) {
         return new Response(JSON.stringify({ message: 'Invalid password' }), {
           status: 401,
@@ -32,6 +32,12 @@ export async function POST(request) {
         });
 
       }
+      const token = JWT.sign(
+        { id: userExists._id, email: userExists.email,role:userExists.role },
+        JWT_SECRET,
+        { expiresIn: '1h' }
+      );
+  
       return new Response(JSON.stringify({ message: 'user found' }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },

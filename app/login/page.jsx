@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -11,7 +10,6 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const router = useRouter();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);

@@ -11,7 +11,8 @@ export default function Header() {
         <li><Link href="/contectus">Contect Us</Link></li>
       </ul>
       <div>
-      login
+      <Link href="/login" className='mr-3'>Login</Link>
+      <Link href="/register" >register</Link>
       </div>
     </div>
   )

@@ -13,8 +13,9 @@ export async function POST(request) {
         headers: { 'Content-Type': 'application/json' },
       });
     }
-
+    console.log("calling dbconnect in register route")
     await dbConnect();
+    console.log("done")
 
     const emailExists = await user.findOne({ email });
     if (emailExists) {
@@ -31,7 +32,7 @@ export async function POST(request) {
       });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 23);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new user({
       username,
