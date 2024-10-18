@@ -1,22 +1,9 @@
 // app/profile/page.js (or pages/profile.js if using pages directory)
-import { getServerSession } from "../../../models/node_modules/next-auth/src";
-import Image from '@/models/node_modules/next/image';
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import Link from "@/models/node_modules/next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default async function page() {
-    const session = await getServerSession(authOptions);
-    // If there is no session, redirect to login or show an unauthorized message
-    if (!session) {
-        return(
-            <>
-            <h1>
-                you are not loged in so please login first
-            </h1>
-            <Link href="/auth/signin">login</Link>
-            </>
-        )
-  }
+    
 
   return (
     <div>

@@ -8,8 +8,8 @@ export const useStores = () => {
 };
 
 export const StoresProvider = ({ children }) => {
-  const [stores, setStores] = useState([]);
 
+  const [stores, setStores] = useState([]);
   useEffect(() => {
     const fetchStores = async () => {
       const response = await fetch('/api/stores'); // Adjust this URL as necessary

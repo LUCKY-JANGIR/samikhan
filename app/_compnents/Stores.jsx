@@ -5,9 +5,8 @@ import { useStores } from '../contexts/storeslistcontext'
 
 
 
-export default  function Stores() {
+export default   function Stores() {
   const stores =  useStores();
-  
   return (
     <div className='flex flex-col border-b-2 py-3 px-10'>
       <h1 className='uppercase self-center text-lg font-semibold mb-2'><Link href="/stores">Stores</Link></h1>
